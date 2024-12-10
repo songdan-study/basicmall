@@ -16,7 +16,6 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
-
     @Test
     @DisplayName("상품 저장 테스트")
     public void createItemTest() {
@@ -51,9 +50,8 @@ class ItemRepositoryTest {
         }
     }
 
-
     @Test
-    @DisplayName("상품명 조회 테스트")
+    @DisplayName("상품명을 조건으로 상품 조회 테스트")
     public void findByItemNameTest() {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemName("테스트 상품3");
@@ -63,7 +61,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("상품명 또는 상품상세설명 조회 테스트")
+    @DisplayName("상품명 또는 상품상세설명을 조건으로 상품 조회 테스트")
     public void findByItemNameOrItemDetailTest() {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemNameOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
@@ -83,7 +81,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("가격 내림차순 조회 테스트")
+    @DisplayName("가격 내림차순 상품 조회 테스트")
     public void findByPriceGreaterThanEqualOrderByPriceDesc() {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceGreaterThanEqualOrderByPriceDesc(10003);
@@ -93,11 +91,21 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    @DisplayName("@Query와 JPQL을 이용한 상품 조회 테스트")
     public void findByItemDetailTest(){
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
         for(Item item : itemList){
+            System.out.println(item.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("@Query와 네이티브 SQL을 이용한 상품 조회 테스트")
+    public void findByItemDetailByNativeTest() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByItemDetailByNative("테스트 상품 상세 설명");
+        for(Item item : itemList) {
             System.out.println(item.toString());
         }
     }
